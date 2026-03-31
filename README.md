@@ -1,4 +1,4 @@
-# 🛵 Catching Overloaded Bikes: A Beginner-Friendly Computer Vision Project
+# 🛵 Two-Wheeler Rider Count and Overloading Detection using Computer Vision
 
 ## What does this project do?
 
@@ -14,23 +14,29 @@ Here are three examples showing what the original pictures look like, compared t
 
 #### Example 1: Severely Overloaded (5 People)
 **Before (Original Input):**
+
 <img src="input/five-on-one-scooter-a-cheerful-father-in-mumbai-bombay-india-ferrying-his-son-and-three-school-mates-home-from-school-on-his-motor-scooter-2B1XAEM.jpg" width="600" alt="Input Image 5 people">
 
 **After (Processed Output):**
+
 <img src="output/result_five-on-one-scooter-a-cheerful-father-in-mumbai-bombay-india-ferrying-his-son-and-three-school-mates-home-from-school-on-his-motor-scooter-2B1XAEM.jpg" width="600" alt="Output Image 5 people">
 
 #### Example 2: Normal Riding (2 People)
 **Before (Original Input):**
+
 <img src="input/two-friends-riding-a-bike-W7WECB.jpg" width="600" alt="Input Image 2 people">
 
 **After (Processed Output):**
+
 <img src="output/result_two-friends-riding-a-bike-W7WECB.jpg" width="600" alt="Output Image 2 people">
 
 #### Example 3: Triple Riding Detected (3 People)
 **Before (Original Input):**
+
 <img src="input/16-08-2020kanakapurakarnatakaindia-triple-riding-with-a-bike-in-india-2CC2W29.jpg" width="600" alt="Input Image 3 people">
 
 **After (Processed Output):**
+
 <img src="output/result_16-08-2020kanakapurakarnatakaindia-triple-riding-with-a-bike-in-india-2CC2W29.jpg" width="600" alt="Output Image 3 people">
 
 ---
