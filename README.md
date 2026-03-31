@@ -43,54 +43,32 @@ Finally, we carefully count the number of body rectangles we drew.
 
 ## How to Use This Project?
 
-### 1. What You Need (Installation)
-You just need Python installed on your computer, along with two very common libraries: `opencv-python` (which handles the image processing) and `numpy`. 
+You need **Python** installed. Follow these quick steps in your terminal or command prompt:
 
-Here is how you can set it up on your specific operating system:
+### 1. Setup
+Open your terminal, navigate to the project folder, and run:
 
-#### 🪟 For Windows Users
-1. **Install Python:** Download and install Python from [python.org](https://www.python.org/downloads/). *(Important: Make sure to check the box that says "Add Python to PATH" during installation!)*
-2. **Open Command Prompt:** Press the Windows key, type `cmd`, and press Enter.
-3. **Navigate to the project:** Use the `cd` (change directory) command to go to the folder where you saved this project. For example:
-   ```cmd
-   cd C:\Users\YourName\Downloads\Detecting-Overloaded-Auto-Bike
-   ```
-4. **Install the libraries:** Run this command:
-   ```cmd
-   pip install -r requirements.txt
-   ```
+**For Windows:**
+```cmd
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-#### 🍎 For Mac Users
-1. **Open Terminal:** Press `Command + Space`, type `Terminal`, and hit Enter.
-2. **Navigate to the project:** Use the `cd` command to go to the folder where you saved this project. For example:
+**For Mac / Linux:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+```
+
+### 2. Run
+1. Put any bike pictures you want to test into the `input/` folder.
+2. Run the script:
    ```bash
-   cd ~/Downloads/Detecting-Overloaded-Auto-Bike
+   python main.py
    ```
-3. **Install the libraries:** Mac usually uses `pip3`. Run this command:
-   ```bash
-   pip3 install -r requirements.txt
-   ```
-
-#### 🐧 For Linux Users
-1. **Open Terminal:** Press `Ctrl + Alt + T`.
-2. **Navigate to the project:** Use the `cd` command to go to the folder where you saved this project:
-   ```bash
-   cd ~/Downloads/Detecting-Overloaded-Auto-Bike
-   ```
-3. **Install the libraries:** Run this command:
-   ```bash
-   pip3 install -r requirements.txt
-   ```
-
-### 2. Running the Tool
-Now that everything is installed, you are ready to play with the code!
-
-1. **Add your pictures:** Drop any test pictures of bikes you want to check into the `input/` folder.
-2. **Run the magic command:** In your Command Prompt or Terminal, type the following:
-   - On **Windows**, run: `python main.py`
-   - On **Mac or Linux**, run: `python3 main.py`
-
-The program will process all the images in the input folder and save the final results inside the `output/` folder! If you open those result images, you will see bright green boxes drawn over the riders and the total count written clearly in the corner.
+3. Check the `output/` folder to see the results with green boxes and passenger counts!
 
 ---
 
