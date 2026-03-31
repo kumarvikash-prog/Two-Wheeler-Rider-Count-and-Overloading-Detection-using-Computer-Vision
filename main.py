@@ -57,6 +57,44 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def process_image(
+    image_path: Path,
+    output_dir: Path,
+    config: DetectorConfig,
+    save_intermediate: bool = False,
+    show: bool = False,
+) -> None:
+    """Process a single image and save results."""
+    original_image = load_image(image_path)
+    
+    result = detect_triple_riding(original_image, config)
+
+    final_output = draw_detection_result(
+        image=result["resized_image"],
+        boxes=result["boxes"],
+        person_count=result["person_count"],
+        status=result["status"],
+    )
+
+    # Generate output filename based on input filename
+    output_filename = f"result_{image_path.stem}.jpg"
+    output_image_path = output_dir / output_filename
+    save_image(output_image_path, final_output)
+
+    if save_intermediate:
+        save_image(output_dir / f"{image_path.stem}_01_gray.jpg", result["gray"])
+
+    print(f"\nInput Image: {image_path.name}")
+    print(f"Detected People: {result['person_count']}")
+    print(f"Status: {result['status']}")
+    print(f"Output Saved: {output_image_path}")
+
+    if show:
+        cv2.imshow(f"Triple Riding Detection - {image_path.name}", final_output)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+
 def main() -> None:
     """Run the full image-based triple riding detection pipeline."""
     args = parse_arguments()
@@ -68,38 +106,32 @@ def main() -> None:
     ensure_directory(input_dir)
     ensure_directory(output_dir)
 
-    image_path = resolve_input_image_path(args.image, input_dir)
-    original_image = load_image(image_path)
-
     config = DetectorConfig()
-    result = detect_triple_riding(original_image, config)
 
-    final_output = draw_detection_result(
-        image=result["resized_image"],
-        boxes=result["boxes"],
-        person_count=result["person_count"],
-        status=result["status"],
-        roi_ratio=config.roi_ratio,
-    )
-
-    output_image_path = output_dir / args.output_name
-    save_image(output_image_path, final_output)
-
-    if args.save_intermediate:
-        save_image(output_dir / "01_gray.jpg", result["gray"])
-        save_image(output_dir / "02_edges.jpg", result["edges"])
-        save_image(output_dir / "03_morphed.jpg", result["morphed"])
-        save_image(output_dir / "04_roi_top50.jpg", result["roi"])
-
-    print(f"Input Image: {image_path}")
-    print(f"Detected People: {result['person_count']}")
-    print(f"Status: {result['status']}")
-    print(f"Output Saved: {output_image_path}")
-
-    if args.show:
-        cv2.imshow("Triple Riding Detection", final_output)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+    # If specific image is provided, process only that image
+    if args.image:
+        image_path = resolve_input_image_path(args.image, input_dir)
+        process_image(image_path, output_dir, config, args.save_intermediate, args.show)
+    else:
+        # Process all images in the input directory
+        image_extensions = ['*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG']
+        image_files = []
+        for ext in image_extensions:
+            image_files.extend(input_dir.glob(ext))
+        
+        if not image_files:
+            print(f"No images found in {input_dir}")
+            return
+        
+        print(f"Found {len(image_files)} image(s) to process...")
+        
+        for image_path in sorted(image_files):
+            try:
+                process_image(image_path, output_dir, config, args.save_intermediate, args.show)
+            except Exception as e:
+                print(f"Error processing {image_path.name}: {e}")
+        
+        print(f"\n✓ Processed {len(image_files)} image(s) successfully!")
 
 
 if __name__ == "__main__":

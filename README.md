@@ -1,5 +1,9 @@
 # Triple Riding Detection (Overloaded Bike Detection) using Classical Computer Vision
 
+## Problem Statement
+
+Triple riding on two-wheelers is a common traffic violation in India and increases accident risk. Manual monitoring is limited, so this project proposes a simple image-based detection approach to flag potential triple riding cases for traffic monitoring, enforcement support, and road-safety awareness.
+
 A beginner-friendly Computer Vision project to estimate how many riders are on a bike and flag potential triple riding.
 
 This project uses only classical CV techniques:
@@ -125,3 +129,26 @@ python main.py --show
 - No deep learning models used.
 - No pre-trained person detector used.
 - Only classical computer vision operations are used.
+
+## Why This Approach Works
+
+This project uses classical computer vision (not deep learning) based on practical visual cues:
+
+- Rider heads and upper bodies often create detectable edge contours.
+- Processing only the top half of the image removes road and wheel noise.
+- Dilation and closing convert broken edges into more complete blobs.
+- Contour filtering (area + aspect ratio) helps keep human-like regions.
+
+The system estimates rider count by detecting geometric patterns that approximate human presence.
+
+## Results and Observations
+
+On multiple test images, the pipeline works well for clear side-view bike scenes with visible rider separation. ROI-based filtering and morphological operations noticeably improve detection quality and reduce irrelevant detections.
+
+Common failure cases:
+
+- Overlapping riders may merge into one contour (undercounting).
+- Similar-shaped background objects can cause false positives.
+- Low-light or blurry images weaken edge detection.
+
+Overall, this method provides a useful classical CV baseline, though it is less robust than learning-based systems.
